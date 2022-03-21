@@ -13,8 +13,8 @@ public class Triangle extends Shape{
 
     @Override
     public double area(){
-        double s = perimeter()/2;
-        if(perimeter()<0){
+        double s = this.perimeter()/2;
+        if(this.perimeter()<0){
             throw new NumberFormatException("Area cannot be negative number.");
         }
         exceptionTriangleSide();

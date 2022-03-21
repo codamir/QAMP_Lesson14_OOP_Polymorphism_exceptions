@@ -15,35 +15,18 @@ public class MainRunner {
         double sideB = 0;
         double sideC = 0;
 
-        Rectangular myRectangle = new Rectangular(sideOne, sideTwo);
-        Triangle myTriangle = new Triangle(sideA, sideB, sideC);
-        Circle myCircle = new Circle(radius);
-
         int answer = 0;
         char choice = 0;
         int calc = 0;
 
-        ArrayList<Shape> shapes;
+        ArrayList<Shape> shapes = new ArrayList<>();
 
         do {
-            do {
-                System.out.println("How many calculations you would like?");
-                calc = reader.nextInt();
-
-                if (calc <= 0) {
-                    System.out.println("Number of calculations must be 1 or higher.");
-                    System.out.println("Try again? y/n");
-                    choice = reader.next().toLowerCase().charAt(0);
-                } else break;
-            } while (choice == 'y');
-
-            shapes = new ArrayList<>(calc);
-
-            System.out.println("MENU | Choose shape:");
+            System.out.println("Choose shape:");
             String[] menuOptions = {
-                "Rectangle area and perimeter",
-                "Circle area and circumference",
-                "Triangle area and perimeter",
+                    "Rectangle area and perimeter",
+                    "Circle area and circumference",
+                    "Triangle area and perimeter",
             };
 
             menuFromArray(menuOptions);
@@ -51,6 +34,7 @@ public class MainRunner {
             answer = reader.nextInt();
 
             if (answer == 1) {
+                calc = calculations();
                 int count = 0;
                 for (int i = 0; i < calc; i++) {
                     System.out.println("For your " + ++count + "." + " rectangle.");
@@ -60,18 +44,16 @@ public class MainRunner {
                     sideTwo = reader.nextDouble();
                     shapes.add(new Rectangular(sideOne, sideTwo));
                 }
-                printResult(shapes);
-
             } else if (answer == 2) {
+                calc = calculations();
                 int count = 0;
                 for (int i = 0; i < calc; i++) {
                     System.out.println("For your " + ++count + "." + " circle, please enter radius:");
                     radius = reader.nextDouble();
                     shapes.add(new Circle(radius));
                 }
-                printResult(shapes);
-
             } else if (answer == 3) {
+                calc = calculations();
                 for (int i = 0; i < calc; i++) {
                     int count = 0;
                     System.out.println("For your " + ++count + "." + " triangle, please.");
@@ -83,33 +65,26 @@ public class MainRunner {
                     sideC = reader.nextDouble();
                     shapes.add(new Triangle(sideA, sideB, sideC));
                 }
-                printResult(shapes);
-
             } else {
                 System.out.println("Wrong number entered. Please choose option between 1 and 3. Try again? y/n");
                 choice = reader.next().toLowerCase().charAt(0);
             }
-            System.out.println("Do you want to calculate some more? y/n");
+            System.out.println("Do you want to calculate area and perimeter for another shape? y/n");
             choice = reader.next().toLowerCase().charAt(0);
         } while (choice == 'y');
+
+        printResult(shapes);
     }
 
     static void printResult (ArrayList<Shape> shapes){
         int counter = 0;
         for (Shape result:shapes) {
             try {
-            System.out.println("Your " + ++counter +"."+ " input - Area: " + result.area() + ", Perimeter: " + result.perimeter());
+                System.out.println("Your " + ++counter +"."+ " input - Area: " + result.area() + ", Perimeter: " + result.perimeter());
             } catch (Exception m){
                 System.out.println(m.getMessage());
             }
-         }
-    }
-
-    static int numberOfCalculations() {
-        Scanner reader = new Scanner(System.in);
-
-        System.out.println("How many calculations you would like?");
-        return reader.nextInt();
+        }
     }
 
     static void menuFromArray(String[] menu){
@@ -119,6 +94,23 @@ public class MainRunner {
         }
     }
 
+    static int calculations (){
+        Scanner reader = new Scanner(System.in);
+        int calc;
+        char choice;
+
+        do {
+            System.out.println("How many calculations you would like?");
+            calc = reader.nextInt();
+
+            if (calc <= 0) {
+                System.out.println("Number of calculations must be 1 or higher.");
+                System.out.println("Try again? y/n");
+                choice = reader.next().toLowerCase().charAt(0);
+            } else break;
+        } while (choice == 'y');
+        return calc;
+    }
 }
 
 
